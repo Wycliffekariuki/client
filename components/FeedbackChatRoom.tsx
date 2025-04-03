@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import type { TypedUseSelectorHook } from 'react-redux';
 import { useAppSelector, useAppDispatch, useAppStore } from '../reduxstore/app/hooks';
 import type {Field, Fields, Complains, Users, UserField, AllFields, BasicResponse} from '../types_this_is_exhausting/types'
 import { useNavigate } from 'react-router';
@@ -19,8 +18,9 @@ const FeedbackChatRoom: React.FC = () => {
     const [Allfields, setAllFields] = useState<AllFields>();
     const [complainLoading, setComplainLoading] = useState<boolean>(false)
     
-
-   
+    useEffect(() => {
+        getComplaints();
+    }, []);
    
 
     async function getComplaints() {

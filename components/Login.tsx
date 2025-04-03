@@ -124,8 +124,9 @@ const Login: React.FC = () => {
                                     onBlur={formik.handleBlur}
                                 />
                                 <button
-                                    type="button"
-                                    className="absolute cursor-pointer inset-y-0 right-3 flex items-center text-gray-500"
+                                style={{backgroundColor: 'transparent', outline: 'none', border: 'none'}}
+                                    type='button'
+                                    className="absolute cursor-pointer inset-y-0 right-1 flex items-center "
                                     onClick={() => setShowPassword((prev) => !prev)}
                                 >
                                     {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
