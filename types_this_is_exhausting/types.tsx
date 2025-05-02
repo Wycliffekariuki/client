@@ -16,7 +16,16 @@ export interface Field {
 
 
 export interface Complains {
-    fields: Field
+    id: number;
+    user_id: UserField
+
+    severity: "H" | "M" | "L";
+    title: string;
+    complain: string;
+    time_stamp: string;
+    is_complete: string;
+    type: string;
+    admin_id: number; 
 }
 export interface Fields {
     field: Field
@@ -55,6 +64,16 @@ export interface BasicResponse {
 export type login = boolean;
 
 export interface Admin {
-    adminId: number,
+    id: number,
+    data: UserField
 }
 
+export interface complainSelected {
+    index: number | 0;
+}
+
+export interface AllAdmins {
+    id: number;
+    department: string;
+    user_id: UserField;
+}

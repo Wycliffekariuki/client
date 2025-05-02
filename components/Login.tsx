@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router';
 
-
 import { useAppDispatch, useAppStore } from '../reduxstore/app/hooks';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from "yup";
 import { Eye, EyeOff } from 'lucide-react';
-
+import { UserField, Users } from 'types_this_is_exhausting/types';
 import { loginAction } from '../reduxstore/features/counterSlice';
 
 type FormData = {
@@ -47,6 +46,12 @@ const Login: React.FC = () => {
                 if(response.status === 200){
                 dispatch(login);
                 console.log(store.getState().login.login);
+                const adminUser: UserField = response.data.data.adminData;
+                const adminId: number = response.data.data.id;
+                console.log("Admin ID: ", adminId, "Admin Data: ", adminUser);
+                const adminData: Users = {fields: adminUser, pk: adminId};
+                dispatch({type: 'admin/setAdmin', payload: adminData});
+                console.log("Admin Data from store: ", store.getState().admin.admin);
                 navigate('/admin')
                    
                 }else if(response.status === 400){
@@ -162,6 +167,7 @@ export type Route = {
     id: '/',
     path: '/'
 }
+
 export default Login;
 
 

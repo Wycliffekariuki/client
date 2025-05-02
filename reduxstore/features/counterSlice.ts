@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { Action, PayloadAction } from "@reduxjs/toolkit";
-import type { Complains, login, Admin } from '../../types_this_is_exhausting/types'
+import type { Complains, complainSelected, login, Users } from '../../types_this_is_exhausting/types'
 
 
 interface ComplainState {
-    complain: Complains | null;
+    complain: Complains[] | [];
 }
 
 interface LoginState {
@@ -14,15 +14,16 @@ interface LoginState {
 
 
 interface adminState {
-    admin: Admin | null
+    admin: Users | null
 }
 
 
-
-
+const initialComplainSelectedState : complainSelected = {
+    index: 0,
+}
 
 const initialComplainState: ComplainState = {
-    complain: null,
+    complain: [],
 };
 
 const initialLoginState: LoginState = {
@@ -33,15 +34,28 @@ const intialAdminState: adminState = {
     admin: null
 };
 
+const selectedComplainSlice = createSlice({
+    name: "selectedComplain",
+    initialState: initialComplainSelectedState,
+    reducers: {
+        setSelectedComplain: (state, action: PayloadAction<complainSelected>) => {
+            state.index = action.payload.index;
+        },
+        resetSelectedComplain: (state) => {
+            state.index = 0;
+        }
+    }
+})
+
 const complainSlice = createSlice({
     name: "complain",
     initialState: initialComplainState,
     reducers: {
         setComplain: (state, action: PayloadAction<Complains>) => {
-            state.complain = action.payload;
+            state.complain = [action.payload];
         },
         clearUser: (state) => {
-            state.complain = null;
+            state.complain = [];
         },      
     },
  
@@ -64,17 +78,15 @@ const adminSlice = createSlice({
     name: "admin",
     initialState: intialAdminState,
     reducers: {
-        setAdmin: (state, action: PayloadAction<Admin>) => {
+        setAdmin: (state, action: PayloadAction<Users>) => {
             state.admin = action.payload;
         },
-        resetAdmin: (state, action: PayloadAction<Admin>) => {
+        resetAdmin: (state, action: PayloadAction<Users>) => {
             state.admin = action.payload;
         }
     }
 })
-   const  myFunction = () => {
-    console.log("Hello");
-}
+   
 
 
 export const { setComplain, clearUser } = complainSlice.actions;
@@ -82,3 +94,4 @@ export const { logout, loginAction } = loginSlice.actions;
 export default  complainSlice.reducer;
 export const loginReducer = loginSlice.reducer;
 export const adminReducer = adminSlice.reducer;
+export const selectedComplainReducer = selectedComplainSlice.reducer;
